@@ -1,0 +1,36 @@
+---
+description: RAG Mutual Fund FAQ Bot — locked architecture and feature decisions (see context.md)
+alwaysApply: true
+---
+
+# RAG Bot Project Context
+
+Before implementing, reviewing, or changing anything in this repo, read **`context.md`** at the project root. It is the source of truth for locked decisions.
+
+## Authority
+
+- **Locked decisions in `context.md` override** the course brief, generic RAG patterns, or agent defaults when they conflict.
+- Phase sections in `context.md` beat the Summary cross-reference table if anything disagrees.
+- Do not introduce features listed under "What's OUT" or build "Deliberately Deferred" items without explicit user approval.
+
+## Scope (locked)
+
+- AMC: ICICI Prudential; 4 schemes (Bluechip, Flexicap, ELSS Tax Saver, Balanced Advantage).
+- Corpus: ~20 pages (factsheets, KIMs, scheme pages, AMC/regulatory/registrar sources).
+- Facts only — no investment advice, no performance claims, no PII processing.
+
+## Stack highlights (locked)
+
+- **Parsing:** PyMuPDF + pdfplumber (PDF), Trafilatura + BeautifulSoup (HTML) → markdown intermediate.
+- **Chunking:** child 100–200 tokens, parent 600–800 tokens, structure-aware splitter.
+- **Embeddings / rerank:** Voyage `voyage-finance-2` (1024 dims) + `rerank-2`.
+- **Storage:** PostgreSQL + pgvector; 8 tables (`source_documents`, `parent_chunks`, `child_chunks`, `sessions`, `query_logs`, `feedback`, `pii_refusals`, `session_turn_embeddings`).
+- **Retrieval:** BM25 + semantic, RRF (k=60), pre-filter by scheme, top 20 → rerank → top 3 unique parents.
+- **Generation:** Claude; citation enforcement programmatic; experience levels (`new` / `somewhat_familiar` / `expert`, default `somewhat_familiar`).
+- **Ops:** Eval suite in-repo; diagnostic SQL in `diagnostics/`; Metabase dashboard.
+
+## Implementation discipline
+
+- Match file paths and conventions already named in `context.md` (e.g. `prompts/system_prompt.md`, `templates/regulatory/`, `diagnostics/`).
+- Respect latency/cost budgets and the "added complexity gate" before adding pipeline layers.
+- When unsure whether a choice is locked, check `context.md` first — do not guess or improvise architecture.

@@ -1,0 +1,34 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node (if used)
+node_modules/
+
+# Generated / runtime
+/data/learnings/
+/data/models/
+ingestion_report.md
+/evals/results/*
+!/evals/results/.gitkeep
+!/evals/results/summary.md
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Metabase / Docker volumes (if added)
+.metabase/

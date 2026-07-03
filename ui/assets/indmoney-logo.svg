@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="INDmoney">
+  <circle cx="24" cy="24" r="24" fill="#0b1220"/>
+  <text x="24" y="21" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="11" font-weight="800" fill="#3dfc8a">IND</text>
+  <text x="24" y="32" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="8" font-weight="600" fill="#e8f7ef">money</text>
+</svg>
